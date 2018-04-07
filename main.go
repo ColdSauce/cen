@@ -5,6 +5,7 @@ import (
 	"log"
 	"net"
 	"net/http"
+	"os"
 
 	"github.com/gorilla/mux"
 )
@@ -41,7 +42,8 @@ func dnsTwimlResponse(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	port := fmt.Sprintf(":%s", os.Getenv("PORT"))
 	router := mux.NewRouter()
 	router.HandleFunc("/", dnsTwimlResponse).Methods("GET")
-	log.Fatal(http.ListenAndServe(":8000", router))
+	log.Fatal(http.ListenAndServe(port, router))
 }
